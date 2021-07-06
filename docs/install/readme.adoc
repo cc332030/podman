@@ -8,4 +8,6 @@ conflicts with docker
 
 dnf -y install podman
 
+pip3 install podman-compose
+
 ----
