@@ -1,0 +1,11 @@
+
+= install
+
+conflicts with docker
+
+[source,shell script]
+----
+
+dnf -y install podman
+
+----

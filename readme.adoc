@@ -1,0 +1,4 @@
+
+= podman
+
+command same with docker
