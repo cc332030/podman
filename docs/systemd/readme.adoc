@@ -1,0 +1,7 @@
+
+= podman systemd
+
+[source,shell]
+----
+podman generate systemd --new --files --name nginx
+----
