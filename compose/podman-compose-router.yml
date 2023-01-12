@@ -1,0 +1,73 @@
+version: "3"
+
+services:
+
+  nginx:
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    image: nginx:alpine
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - aria2
+      - ariang
+      - filebrowser
+    labels:
+      - "io.containers.autoupdate=registry"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./acme/data/c332030.com_ecc:/etc/nginx/cert:ro
+
+      - ./nginx/html:/etc/nginx/html:ro
+      - ./nginx/logs:/etc/nginx/logs
+
+  aria2:
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    image: p3terx/aria2-pro
+    container_name: aria2
+    ports:
+      - "6888:6888"
+    environment:
+      - RPC_SECRET=123456
+    labels:
+      - "io.containers.autoupdate=registry"
+    volumes:
+      - ./aria2:/config
+      - ./nginx/html/dl:/downloads
+
+  ariang:
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    image: p3terx/ariang
+    container_name: ariang
+    depends_on:
+      - aria2
+    labels:
+      - "io.containers.autoupdate=registry"
+
+  filebrowser:
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    image: filebrowser/filebrowser
+    container_name: filebrowser
+    depends_on:
+      - aria2
+    labels:
+      - "io.containers.autoupdate=registry"
+    volumes:
+      - ./nginx/html/dl:/srv
+      - ./filebrowser/database.db:/database.db
