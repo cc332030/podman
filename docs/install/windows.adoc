@@ -1,0 +1,11 @@
+
+= podman windows install
+
+[source,shell]
+----
+
+podman machine init
+
+podman machine start
+
+----
