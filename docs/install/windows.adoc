@@ -8,5 +8,6 @@ https://github.com/containers/podman/releases
 podman machine init
 
 podman machine start
+podman machine stop
 
 ----
