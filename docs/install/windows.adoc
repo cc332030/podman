@@ -10,4 +10,10 @@ podman machine init
 podman machine start
 podman machine stop
 
+# 安装 podman
+winget install -e --id RedHat.Podman-Desktop
+
+# 卸载
+wsl --unregister podman-machine-default
+
 ----
